@@ -21,6 +21,32 @@ stroke risk prediction machine learning tabular data models evaluation Shapley A
 | 4 | Chun et al. (2021), *Stroke risk prediction using machine learning: a prospective cohort study of 0.5 million Chinese adults* | https://doi.org/10.1093/jamia/ocab068 | 503,842 adults from the China Kadoorie Biobank | Cox models, Random Survival Forest, Logistic Regression, SVM, Gradient Boosted Trees and MLP | Gradient Boosted Trees achieved AUROC approximately 0.83–0.84 and better calibration than conventional Cox models | No independent external validation established in the current report | Omission of atrial fibrillation, exclusion of right-censored data and need for external validation |
 | 5 | Duan et al. (2025), *Development and validation of a stroke risk prediction model using regional healthcare big data and machine learning* | https://doi.org/10.1016/j.ijnss.2025.10.011 | 92,172 adults from the CHERRY regional electronic health record platform, China | Logistic Regression, Decision Tree, Random Forest, XGBoost and Back-propagation Neural Network | Random Forest achieved validation AUC 0.980, accuracy 0.919, precision 0.912, recall 0.929 and F1-score 0.921 | No external validation; internal validation only | Single-region dataset, reliance on SMOTE and limited explainability analysis |
 | 6 | Yang et al. (2021), *Accurate Prediction of Stroke for Hypertensive Patients Based on Medical Big Data and Machine Learning Algorithms: Retrospective Study* | https://doi.org/10.2196/30277 | 57,671 hypertensive patients from the Shenzhen Health Information Big Data Platform | XGBoost, Random Forest, SVM and Logistic Regression using longitudinal clinical features | XGBoost achieved AUROC 0.9220, outperforming the other evaluated algorithms | No independent external validation established in the current report | Retrospective design, missing data, patient exclusion during screening and limited availability of laboratory markers |
+| 7 | Zhang et al. (2020), *Validation of 10-Year Stroke Prediction Scores in a Community-Based Cohort of Chinese Older Adults* | https://doi.org/10.3389/fneur.2020.00086 | 1,203 adults from the Beijing Longitudinal Study of Aging | External validation of China-PAR and revised Framingham Stroke Risk Score | China-PAR C-statistic: 0.603 in men and 0.602 in women; recalibration improved discrimination | Yes | Relatively small cohort and modest discrimination; results may not generalize to other populations. |
+| 8 | Wang et al. (2023), *Developing and externally validating a machine learning risk prediction model for 30-day mortality after stroke using national stroke registers in the UK and Sweden* | https://doi.org/10.1136/bmjopen-2022-069811 | 488,497 UK patients and 128,360 Swedish patients | Logistic Regression, Elastic Net, XGBoost | XGBoost achieved AUC 0.861 in external validation; calibration was also evaluated | Yes – Sweden registry | Predicts post-stroke mortality rather than the occurrence of a first stroke; limited to hospital registry variables. |
+| 9 | Lee et al. (2025), *External Validation of Two 10-Year Stroke Risk Prediction Models Using Korean Genome and Epidemiology Study Data* | https://doi.org/10.1111/nhs.70033 | 8,432 participants for one model and 8,915 for the other; Korean community cohort | External validation of Korean and Chinese 10-year stroke risk models | AUC: 0.72 and 0.68 for one model; 0.70 and 0.66 for the other, by sex | Yes | Both models showed insufficient predictive performance in the validation population. |
+| 10 | Reitzle et al. (2025), *External validation of risk prediction models for post-stroke mortality in Berlin* | https://doi.org/10.1136/bmjopen-2024-089320 | 7,879 patients for one model and 1,931 for another; B-SPATIAL registry, Berlin | External validation of two post-stroke mortality prediction models | C-statistics: 0.865 and 0.891; both models underestimated risk in high-risk patients | Yes | Predicts post-stroke mortality, not first-ever stroke risk; performance varied across risk levels. |
+
+---
+
+## Table 2. Research Gaps
+
+| ID | Gap (1–2 sentences) | Evidence (# in A2) | How Your Project Addresses It |
+|---|---|---|---|
+
+| 1 | Many stroke prediction models are evaluated using internal validation, while their performance may change when applied to different populations. External validation studies also demonstrate that discrimination and calibration can vary between populations. | #1, #4, #7, #8, #9, #10 | This project evaluates multiple machine learning models using a separate test set and discusses the need for external validation before clinical application. |
+| 2 | Stroke prediction studies use different populations, predictors, and outcome definitions. Some studies predict first-ever stroke, whereas others predict mortality or recurrence after stroke, making direct comparisons difficult. | #2, #4, #5, #6, #7, #8, #9, #10 | This project focuses on binary stroke prediction using routine clinical variables and clearly defines the target outcome and dataset limitations. |
+| 3 | Class imbalance can make accuracy misleading in stroke prediction because patients who experience stroke represent a small proportion of the dataset. Models with high accuracy may still have poor sensitivity for the minority class. | #2, #3, #5, #6 | This project applies SMOTE to the training data and compares models using recall, F1-score, and accuracy, emphasizing the detection of stroke cases. |
+
+
+---
+
+## Table 3. Model Performance Comparison
+
+| Model | Configuration | Accuracy | Stroke Recall | Stroke F1-score |
+|---|---|---:|---:|---:|
+| Random Forest | Default parameters + SMOTE | 87.57% | 25.81% | 0.201 |
+| Random Forest | Tuned parameters + SMOTE | 87.87% | 25.81% | 0.205 |
+| Logistic Regression | Tuned parameters (C = 0.1, L2) + SMOTE | 76.71% | 61.29% | 0.242 |
 
 
 ### A3. Research gaps
@@ -46,9 +72,14 @@ This paper has high applicability because it uses the same dataset and clinical 
 ## B. Results and timeline
 
 ### B1. Current results
-| Logistic Regression | 80/20 split test, 1022 patients | Recall: 61.3% | Accuracy: 76.7% | https://github.com/daokhoi1106-lab/project/blob/main/Machine%20Learning |
+| Model | Evaluation set (split method, n) | Main metric (value, 95% CI if available) | Secondary metrics | Source of numbers (file / notebook / W&B) |
+| Logistic Regression | 80/20 split test, 1022 patients | Recall: 61.3% | Accuracy: 76.7% | [submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb](https://github.com/daokhoi1106-lab/hmyt-project/blob/gd5-proposed-model/submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb) |
+| Random Forest | Default parameters + SMOTE | 87.57% | 25.81% | 0.201 | [submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb](https://github.com/daokhoi1106-lab/hmyt-project/blob/gd5-proposed-model/submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb) |
+| Random Forest | Tuned parameters + SMOTE | 87.87% | 25.81% | 0.205 | [submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb](https://github.com/daokhoi1106-lab/hmyt-project/blob/gd5-proposed-model/submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb) |
+| Logistic Regression | Tuned parameters (C = 0.1, L2) + SMOTE | 76.71% | 61.29% | 0.242 | [submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb](https://github.com/daokhoi1106-lab/hmyt-project/blob/gd5-proposed-model/submissions/stroke_prediction_nhom22/src/Stroke_detection.ipynb) |
 
 
+  
 
 ### B2. Ablation (Milestone 3)
 | Configuration (component removed / changed) | Main metric | Difference vs full model | Source |
@@ -72,6 +103,8 @@ Our project aims to improve evaluation reliability by splitting the dataset befo
 | Complete proposed model and hyperparameter tuning | 202414833 / 202414837 | Week10 | Week10 | Complete |
 | Conduct ablation experiments and model interpretation | 202414833 / 202414847 | Week10 | Week10 | Complete |
 | Final evaluation, calibration and report preparation | All team members | Final – Week 15 | To be confirmed | Not yet verified |
+**Proposed model status:** The ensemble/stacking model is part of the proposed architecture for Milestone 3. However, it has not yet been fully implemented and evaluated in the current notebook. The current experimental results therefore focus on Logistic Regression and Random Forest models with SMOTE. The proposed model remains future work and will require further implementation and evaluation before its performance can be reported.
+**Status date:** 10 November 2026.
 
 ### B5. Risks / blockers / questions for the instructor
 
