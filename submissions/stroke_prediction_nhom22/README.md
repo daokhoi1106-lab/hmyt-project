@@ -3,7 +3,7 @@
 - **Đề tài:** Dự đoán nguy cơ đột quỵ (stroke) từ dữ liệu y tế bằng các mô hình học máy cổ điển, có xử lý mất cân bằng lớp và giải thích mô hình.
 - **Nhóm:** nhom22
 - **Mô hình chính:** Logistic Regression (đã tinh chỉnh, `C=0.1`, `penalty='l2'`), so sánh với Random Forest và SVM; dùng SMOTE để cân bằng lớp trên tập Train và SHAP để giải thích Random Forest.
-- **Kết quả nổi bật:** (điền sau khi chạy lại notebook) Logistic Regression trên tập Test: F1 = …, Recall = …, ROC AUC = …
+- **Kết quả nổi bật:** (điền sau khi chạy lại notebook) Logistic Regression trên tập Test: F1 = 0.231, Recall = 0.800, ROC AUC = 0.842
 
 ## Cấu trúc thư mục
 
